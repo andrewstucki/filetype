@@ -25,6 +25,7 @@ var (
 	TypeLz     = newType("lz", "application/x-lzip")
 	TypeRpm    = newType("rpm", "application/x-rpm")
 	TypeElf    = newType("elf", "application/x-executable")
+	TypeMachO  = newType("mach-o", "application/x-mach-binary")
 	TypeDcm    = newType("dcm", "application/dicom")
 	TypeIso    = newType("iso", "application/x-iso9660-image")
 )
@@ -54,6 +55,7 @@ var Archive = Map{
 	TypeLz:     Lz,
 	TypeRpm:    Rpm,
 	TypeElf:    Elf,
+	TypeMachO:  MachO,
 	TypeDcm:    Dcm,
 	TypeIso:    Iso,
 }
@@ -212,6 +214,16 @@ func Rpm(buf []byte) bool {
 	return len(buf) > 96 &&
 		buf[0] == 0xED && buf[1] == 0xAB &&
 		buf[2] == 0xEE && buf[3] == 0xDB
+}
+
+func MachO(buf []byte) bool {
+	return len(buf) > 4096 &&
+		(buf[0] == 0xCA && buf[1] == 0xFE &&
+			buf[2] == 0xBA && buf[3] == 0xBE) ||
+		(buf[0] == 0xFE && buf[1] == 0xED &&
+			buf[2] == 0xFA && buf[3] == 0xCE) ||
+		(buf[0] == 0xFE && buf[1] == 0xED &&
+			buf[2] == 0xFA && buf[3] == 0xCF)
 }
 
 func Elf(buf []byte) bool {

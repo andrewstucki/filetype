@@ -249,6 +249,7 @@ func main() {
 - **lz** - `application/x-lzip`
 - **rpm** - `application/x-rpm`
 - **elf** - `application/x-executable`
+- **mach-o** - `application/x-mach-binary`
 - **dcm** - `application/dicom`
 
 #### Documents
