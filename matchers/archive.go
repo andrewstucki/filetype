@@ -218,12 +218,12 @@ func Rpm(buf []byte) bool {
 
 func MachO(buf []byte) bool {
 	return len(buf) > 4096 &&
-		(buf[0] == 0xCA && buf[1] == 0xFE &&
+		((buf[0] == 0xCA && buf[1] == 0xFE &&
 			buf[2] == 0xBA && buf[3] == 0xBE) ||
-		(buf[3] == 0xFE && buf[2] == 0xED &&
-			buf[1] == 0xFA && buf[0] == 0xCE) ||
-		(buf[3] == 0xFE && buf[2] == 0xED &&
-			buf[1] == 0xFA && buf[0] == 0xCF)
+			(buf[3] == 0xFE && buf[2] == 0xED &&
+				buf[1] == 0xFA && buf[0] == 0xCE) ||
+			(buf[3] == 0xFE && buf[2] == 0xED &&
+				buf[1] == 0xFA && buf[0] == 0xCF))
 }
 
 func Elf(buf []byte) bool {
