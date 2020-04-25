@@ -218,8 +218,8 @@ func Rpm(buf []byte) bool {
 
 func MachO(buf []byte) bool {
 	return len(buf) > 4096 &&
-		(buf[3] == 0xCA && buf[2] == 0xFE &&
-			buf[1] == 0xBA && buf[0] == 0xBE) ||
+		(buf[0] == 0xCA && buf[1] == 0xFE &&
+			buf[2] == 0xBA && buf[3] == 0xBE) ||
 		(buf[3] == 0xFE && buf[2] == 0xED &&
 			buf[1] == 0xFA && buf[0] == 0xCE) ||
 		(buf[3] == 0xFE && buf[2] == 0xED &&
