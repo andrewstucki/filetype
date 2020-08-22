@@ -28,6 +28,7 @@ var (
 	TypeDcm    = newType("dcm", "application/dicom")
 	TypeIso    = newType("iso", "application/x-iso9660-image")
 	TypeMachO  = newType("macho", "application/x-mach-binary") // Mach-O binaries have no common extension.
+	TypeLNK    = newType("lnk", "application/x-ms-shortcut")
 )
 
 var Archive = Map{
@@ -58,6 +59,7 @@ var Archive = Map{
 	TypeDcm:    Dcm,
 	TypeIso:    Iso,
 	TypeMachO:  MachO,
+	TypeLNK:    LNK,
 }
 
 func Epub(buf []byte) bool {
@@ -243,4 +245,8 @@ func MachO(buf []byte) bool {
 		(buf[0] == 0xCF && buf[1] == 0xFA && buf[2] == 0xED && buf[3] == 0xFE) ||
 		(buf[0] == 0xCE && buf[1] == 0xFA && buf[2] == 0xED && buf[3] == 0xFE) ||
 		(buf[0] == 0xCA && buf[1] == 0xFE && buf[2] == 0xBA && buf[3] == 0xBE))
+}
+
+func LNK(buf []byte) bool {
+	return len(buf) > 3 && (buf[0] == 0x4C && buf[1] == 0x00 && buf[2] == 0x00 && buf[3] == 0x00)
 }
